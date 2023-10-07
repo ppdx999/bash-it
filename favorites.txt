@@ -1,0 +1,23 @@
+alias general
+
+completion system
+completion bash-it
+completion docker-compose
+completion docker
+completion git
+completion go
+completion npm
+completion nvm
+completion ssh
+completion pip
+completion tmux
+completion yarn
+completion aliases
+
+plugin base
+plugin nvm
+plugin nvim
+plugin go
+plugin pm2
+plugin pyenv
+plugin tmux

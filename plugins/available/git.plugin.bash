@@ -314,3 +314,13 @@ function git-changelog() {
 		done
 	fi
 }
+
+
+function git_fetch_pr() {
+	about 'Fetches a pull request from a remote repository'
+	group 'git'
+	param '1: the pull request number'
+	example '$ git_fetch_pr 123'
+
+	command git fetch origin "pull/$1/head:PR-$1"
+}
