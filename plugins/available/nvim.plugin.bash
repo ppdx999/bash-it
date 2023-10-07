@@ -7,5 +7,5 @@ mkdir -p ~/.config/nvim
 cp -r "${NVIM_DIR}/." ~/.config/nvim
 
 alias nv='nvim'
-alias edit-nvim-conf='${EDITOR:-vim} ${NVIM_DIR}/init.vim'
+alias edit-nvim-conf='${EDITOR:-vim} ${NVIM_DIR}/init.lua'
 
