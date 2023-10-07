@@ -1,0 +1,25 @@
+[[plugins]]
+repo = 'Shougo/dein.vim'
+repo = 'vim-denops/denops.vim'
+repo = 'Shougo/ddu.vim'
+repo = 'Shougo/ddu-ui-ff'
+repo = 'ddu-kind-file'
+repo = 'Shougo/ddu-source-file_rec'
+repo = 'ddu-filter-matcher_substring'
+
+add_hook = '''
+call ddu#custom#patch_global({
+    \   'ui': 'ff',
+    \   'sources': [{'name': 'file_rec', 'params': {}}],
+    \   'sourceOptions': {
+    \     '_': {
+    \       'matchers': ['matcher_substring'],
+    \     },
+    \   },
+    \   'kindOptions': {
+    \     'file': {
+    \       'defaultAction': 'open',
+    \     },
+    \   }
+    \ })
+'''
