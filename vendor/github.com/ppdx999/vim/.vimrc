@@ -74,6 +74,7 @@ Plug 'tpope/vim-surround'
 
 " LSP
 Plug 'prabirshrestha/vim-lsp'
+Plug 'mattn/vim-lsp-settings'
 
 " Filer
 Plug 'lambdalisue/fern.vim'
@@ -164,18 +165,6 @@ nnoremap <silent> <leader>g :<C-u>call <SID>launch_ddu_rg_live()<CR>
 
 
 " LSP SETTINGS
-if executable('typescript-language-server')
-  augroup LspTypeScript
-    autocmd!
-    autocmd User lsp_setup call lsp#register_server({
-          \ 'name': 'typescript-language-server',
-          \ 'cmd': {server_info->['typescript-language-server', '--stdio']},
-          \ 'root_uri':{server_info->lsp#utils#path_to_uri(lsp#utils#find_nearest_parent_file_directory(lsp#utils#get_buffer_path(), 'tsconfig.json'))},
-          \ 'whitelist': ['typescript', 'typescriptreact', 'typescript.tsx'],
-          \ })
-  augroup END
-endif
-
 function! s:on_lsp_buffer_enabled() abort
     setlocal omnifunc=lsp#complete
     setlocal signcolumn=yes
