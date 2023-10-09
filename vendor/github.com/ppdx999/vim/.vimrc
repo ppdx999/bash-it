@@ -74,6 +74,9 @@ Plug 'shun/ddu-source-rg'
 " MISC
 Plug 'github/copilot.vim'
 
+" LSP
+Plug 'prabirshrestha/vim-lsp'
+
 call plug#end()
 
 " DDU SETTINGS
@@ -157,3 +160,40 @@ nnoremap <silent> <leader>b :<C-u>call <SID>launch_ddu_buffer()<CR>
 nnoremap <silent> <leader>m :<C-u>call <SID>launch_ddu_mr()<CR>
 nnoremap <silent> <leader>r :<C-u>call <SID>launch_ddu_register()<CR>
 nnoremap <silent> <leader>g :<C-u>call <SID>launch_ddu_rg_live()<CR>
+
+
+" LSP SETTINGS
+if executable('typescript-language-server')
+  augroup LspTypeScript
+    autocmd!
+    autocmd User lsp_setup call lsp#register_server({
+          \ 'name': 'typescript-language-server',
+          \ 'cmd': {server_info->['typescript-language-server', '--stdio']},
+          \ 'root_uri':{server_info->lsp#utils#path_to_uri(lsp#utils#find_nearest_parent_file_directory(lsp#utils#get_buffer_path(), 'tsconfig.json'))},
+          \ 'whitelist': ['typescript', 'typescriptreact', 'typescript.tsx'],
+          \ })
+  augroup END
+endif
+
+function! s:on_lsp_buffer_enabled() abort
+    setlocal omnifunc=lsp#complete
+    setlocal signcolumn=yes
+    if exists('+tagfunc') | setlocal tagfunc=lsp#tagfunc | endif
+    nmap <buffer> gd <plug>(lsp-definition)
+    nmap <buffer> gs <plug>(lsp-document-symbol-search)
+    nmap <buffer> gS <plug>(lsp-workspace-symbol-search)
+    nmap <buffer> gr <plug>(lsp-references)
+    nmap <buffer> gi <plug>(lsp-implementation)
+    nmap <buffer> gt <plug>(lsp-type-definition)
+    nmap <buffer> <leader>rn <plug>(lsp-rename)
+    nmap <buffer> [g <plug>(lsp-previous-diagnostic)
+    nmap <buffer> ]g <plug>(lsp-next-diagnostic)
+    nmap <buffer> gh <plug>(lsp-hover)
+    nnoremap <buffer> <expr><c-f> lsp#scroll(+4)
+    nnoremap <buffer> <expr><c-d> lsp#scroll(-4)
+endfunction
+
+augroup lsp_install
+    au!
+    autocmd User lsp_buffer_enabled call s:on_lsp_buffer_enabled()
+augroup END
