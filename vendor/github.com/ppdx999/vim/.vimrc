@@ -77,6 +77,9 @@ Plug 'github/copilot.vim'
 " LSP
 Plug 'prabirshrestha/vim-lsp'
 
+" Filer
+Plug 'lambdalisue/fern.vim'
+
 call plug#end()
 
 " DDU SETTINGS
@@ -197,3 +200,6 @@ augroup lsp_install
     au!
     autocmd User lsp_buffer_enabled call s:on_lsp_buffer_enabled()
 augroup END
+
+" FERN SETTINGS
+nnoremap <silent> <leader>j :<C-u>Fern . -reveal=%<CR>
