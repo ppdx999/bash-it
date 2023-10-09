@@ -69,6 +69,7 @@ Plug 'shun/ddu-source-buffer'
 Plug 'lambdalisue/mr.vim'
 Plug 'kuuote/ddu-source-mr'
 Plug 'Shougo/ddu-source-register'
+Plug 'shun/ddu-source-rg'
 
 " MISC
 Plug 'github/copilot.vim'
@@ -156,7 +157,28 @@ function! s:launch_ddu_file() abort
   endif
 endfunction
 
+command! DduRgLive call <SID>ddu_rg_live()
+function! s:ddu_rg_live() abort
+  call ddu#start(#{
+        \   sources: [#{
+        \     name: 'rg',
+        \     options: #{
+        \       matchers: [],
+        \       volatile: v:true,
+        \     },
+        \   }],
+        \   uiParams: #{
+        \     ff: #{
+        \       ignoreEmpty: v:false,
+        \       autoResize: v:false,
+        \     }
+        \   },
+        \ })
+endfunction
+
+
 nnoremap <silent> <leader>f :<C-u>call <SID>launch_ddu_file()<CR>
 nnoremap <silent> <leader>b :<C-u>Ddu buffer<CR>
 nnoremap <silent> <leader>m :<C-u>Ddu mr<CR>
 nnoremap <silent> <leader>r :<C-u>Ddu register<CR>
+nnoremap <silent> <leader>g :<C-u>call <SID>ddu_rg_live()<CR>
