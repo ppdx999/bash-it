@@ -201,3 +201,4 @@ augroup END
 
 " FERN SETTINGS
 nnoremap <silent> <leader>j :<C-u>Fern . -reveal=%<CR>
+let g:fern#default_hidden = 1
