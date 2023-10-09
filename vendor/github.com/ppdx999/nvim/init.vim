@@ -9,7 +9,6 @@ set shiftwidth=2
 set expandtab
 set autoindent
 set smartindent
-
 set visualbell
 set number
 set showmatch
@@ -47,7 +46,7 @@ nnoremap ]t :tabnext<CR>
 tnoremap <Esc> <C-\><C-n>
 
 " Plugins
-" To install run
+" To install vim plug, run the following command.
 " ```
 " $ sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
 " ```
