@@ -33,15 +33,18 @@ set ttimeoutlen=50
 nnoremap <leader>w :w<CR>
 nnoremap <leader>q :q<CR>
 nnoremap <leader>v :<C-u>vs<CR>
-nnoremap <C-h> <C-w><C-h>
-nnoremap <C-j> <C-w><C-j>
-nnoremap <C-k> <C-w><C-k>
-nnoremap <C-l> <C-w><C-l>
-nnoremap ]b :bnext<CR>
+nnoremap <leader>j :<C-u>Explore<CR>
+nnoremap <C-j> ]b
+nnoremap <C-k> [b
 nnoremap [b :bprevious<CR>
+nnoremap ]b :bnext<CR>
+nnoremap [c :cprevious<CR>
+nnoremap ]c :cnext<CR>
 nnoremap tt :tabnew<CR>
-nnoremap ]t :tabnext<CR>
 nnoremap [t :tabprevious<CR>
+nnoremap ]t :tabnext<CR>
+
+tnoremap <Esc> <C-\><C-n>
 
 " Plugins
 " To install run
@@ -59,13 +62,14 @@ Plug 'vim-denops/denops-helloworld.vim'
 Plug 'Shougo/ddu.vim'
 Plug 'Shougo/ddu-commands.vim'
 Plug 'Shougo/ddu-ui-ff'
-Plug 'Shougo/ddu-ui-filer'
 Plug 'Shougo/ddu-kind-file'
-Plug 'Shougo/ddu-source-file'
-Plug 'Shougo/ddu-source-file_rec'
-Plug 'shun/ddu-source-buffer'
 Plug 'Shougo/ddu-filter-matcher_substring'
-Plug 'Shougo/ddu-column-filename'
+Plug 'Shougo/ddu-source-file_rec'
+Plug 'Shougo/ddu-source-file_external'
+Plug 'shun/ddu-source-buffer'
+Plug 'lambdalisue/mr.vim'
+Plug 'kuuote/ddu-source-mr'
+Plug 'Shougo/ddu-source-register'
 
 " MISC
 Plug 'github/copilot.vim'
@@ -73,12 +77,23 @@ Plug 'github/copilot.vim'
 call plug#end()
 
 
-call ddu#custom#patch_local('ff', {
+call ddu#custom#patch_global({
     \   'ui': 'ff',
-    \   'sources': [{'name': 'file_rec', 'params': {}}, {'name': 'buffer', 'params': {}}],
+    \   'sources': [
+    \     {'name': 'file_rec', 'params': {}},
+    \     {'name': 'buffer'},
+    \     {'name': 'mr'},
+    \     {'name': 'register'},
+    \     {'name': 'file_external'},
+    \   ],
     \   'sourceOptions': {
     \     '_': {
     \       'matchers': ['matcher_substring'],
+    \     },
+    \   },
+    \  'sourceParams': {
+    \     'file_external': {
+    \      'cmd': ['git', 'ls-files'],
     \     },
     \   },
     \   'kindOptions': {
@@ -88,25 +103,9 @@ call ddu#custom#patch_local('ff', {
     \   }
     \ })
 
-call ddu#custom#patch_local('filer', {
-    \   'ui': 'filer',
-    \   'sources': [{'name': 'file', 'params': {}}],
-    \   'sourceOptions': {
-    \     '_': {
-    \       'matchers': ['matcher_substring'],
-    \       'columns': ['filename'],
-    \     },
-    \   },
-    \   'kindOptions': {
-    \     'file': {
-    \       'defaultAction': 'open',
-    \     },
-    \   },
-    \ })
-
 "ddu-key-setting
-autocmd FileType ddu-ff call s:ddu_my_settings()
-function! s:ddu_my_settings() abort
+autocmd FileType ddu-ff call s:ddu_ff_keybinds()
+function! s:ddu_ff_keybinds() abort
   nnoremap <buffer><silent> <CR>
         \ <Cmd>call ddu#ui#ff#do_action('itemAction')<CR>
   nnoremap <buffer><silent> i
@@ -115,28 +114,50 @@ function! s:ddu_my_settings() abort
         \ <Cmd>call ddu#ui#ff#do_action('quit')<CR>
 endfunction
 
-function! s:ddu_filter_my_settings() abort
-  nnoremap <buffer> <CR>
-  \ <Cmd>call ddu#ui#ff#do_action('itemAction')<CR>
-  nnoremap <buffer><silent> q
-  \ <Cmd>call ddu#ui#ff#do_action('quit')<CR>
+autocmd FileType ddu-ff-filter call s:ddu_ff_filter_keybinds()
+function! s:ddu_ff_filter_keybinds() abort
+  inoremap <buffer><silent> <CR>
+      \ <Esc><Cmd>call ddu#ui#ff#do_action('closeFilterWindow')<CR>
 endfunction
 
-autocmd FileType ddu-filer call s:ddu_my_settings()
-function! s:ddu_my_settings() abort
-  nnoremap <buffer><silent> <CR>
-        \ <Cmd>call ddu#ui#ff#do_action('itemAction')<CR>
-  nnoremap <buffer><silent> q
-        \ <Cmd>call ddu#ui#ff#do_action('quit')<CR>
+" If current dir has .git, use Ddu file_external,
+" otherwise use Ddu file_rec
+function! s:launch_ddu_file() abort
+  let l:git_dir = finddir('.git', '.;')
+  if l:git_dir != ''
+    call ddu#custom#patch_global({
+    \   'sourceParams': {
+    \     'file_external': {
+    \      'cmd': ['git', 'ls-files'],
+    \     },
+    \   },
+    \ })
+    call ddu#custom#patch_global({
+    \   'sources': [
+    \     {'name': 'file_external', 'params': {}},
+    \   ],
+    \ })
+    call ddu#custom#patch_global({
+    \   'sourceOptions': {
+    \     '_': {
+    \       'matchers': ['matcher_substring'],
+    \     },
+    \   },
+    \ })
+    call ddu#custom#patch_global({
+    \   'kindOptions': {
+    \     'file': {
+    \       'defaultAction': 'open',
+    \     },
+    \   }
+    \ })
+    Ddu file_external
+  else
+    Ddu file_rec
+  endif
 endfunction
 
-function! s:ddu_filter_my_settings() abort
-  nnoremap <buffer> <CR>
-  \ <Cmd>call ddu#ui#ff#do_action('itemAction')<CR>
-  nnoremap <buffer><silent> q
-  \ <Cmd>call ddu#ui#ff#do_action('quit')<CR>
-endfunction
-
-nnoremap <silent> <leader>uf :<C-u>Ddu file_rec -name=ff<CR>
-nnoremap <silent> <leader>ub :<C-u>Ddu buffer -name=ff<CR>
-nnoremap <silent> <leader>uj :<C-u>Ddu file -name=filer<CR>
+nnoremap <silent> <leader>f :<C-u>call <SID>launch_ddu_file()<CR>
+nnoremap <silent> <leader>b :<C-u>Ddu buffer<CR>
+nnoremap <silent> <leader>m :<C-u>Ddu mr<CR>
+nnoremap <silent> <leader>r :<C-u>Ddu register<CR>
