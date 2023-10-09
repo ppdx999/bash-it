@@ -47,11 +47,6 @@ nnoremap ]t :tabnext<CR>
 tnoremap <Esc> <C-\><C-n>
 
 " Plugins
-" To install vim plug, run the following command.
-" ```
-" $ sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
-" ```
-
 call plug#begin()
 
 " Denops
@@ -73,6 +68,9 @@ Plug 'shun/ddu-source-rg'
 
 " MISC
 Plug 'github/copilot.vim'
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-commentary'
+Plug 'tpope/vim-surround'
 
 " LSP
 Plug 'prabirshrestha/vim-lsp'
