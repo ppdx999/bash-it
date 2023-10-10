@@ -45,8 +45,6 @@ nnoremap tt :tabnew<CR>
 nnoremap [t :tabprevious<CR>
 nnoremap ]t :tabnext<CR>
 
-tnoremap <Esc> <C-\><C-n>
-
 " Plugins
 call plug#begin()
 
