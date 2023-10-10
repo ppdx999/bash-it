@@ -24,7 +24,8 @@ nnoremap <Esc><Esc> :nohl<CR>
 
 " Manipulation
 let mapleader = ";"
-set clipboard+=unnamedplus
+set clipboard+=unnamed
+set clipboard+=autoselect
 set ttimeout
 set ttimeoutlen=50
 set mouse=a
@@ -71,6 +72,7 @@ Plug 'github/copilot.vim'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-surround'
+Plug 'jabirali/vim-tmux-yank'
 
 " LSP
 Plug 'prabirshrestha/vim-lsp'
