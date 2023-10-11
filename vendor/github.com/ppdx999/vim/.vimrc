@@ -197,11 +197,14 @@ function! s:on_lsp_buffer_enabled() abort
     nmap <buffer> <leader>rn <plug>(lsp-rename)
     nmap <buffer> [g <plug>(lsp-previous-diagnostic)
     nmap <buffer> ]g <plug>(lsp-next-diagnostic)
+    nmap <buffer> K <plug>(lsp-document-diagnostics)
     nmap <buffer> gh <plug>(lsp-hover)
+    nnoremap <buffer> gD <cmd>let g:lsp_diagnostics_virtual_text_enabled = !g:lsp_diagnostics_virtual_text_enabled<CR>
     nnoremap <buffer> <expr><c-f> lsp#scroll(+4)
     nnoremap <buffer> <expr><c-d> lsp#scroll(-4)
 
     let g:lsp_diagnostics_highlights_enabled = 0
+    let g:lsp_diagnostics_virtual_text_enabled = 0
 endfunction
 
 augroup lsp_install
