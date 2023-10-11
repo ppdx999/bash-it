@@ -14,6 +14,7 @@ set number
 set showmatch
 set matchtime=1
 set nowrap
+set laststatus=2
 
 " Search
 set incsearch
