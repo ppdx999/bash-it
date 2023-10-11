@@ -66,6 +66,11 @@ Plug 'kuuote/ddu-source-mr'
 Plug 'Shougo/ddu-source-register'
 Plug 'shun/ddu-source-rg'
 
+" DDC
+Plug 'Shougo/ddc.vim'
+Plug 'Shougo/ddc-ui-native'
+Plug 'Shougo/ddc-filter-matcher_head'
+Plug 'shun/ddc-source-vim-lsp'
 " GIT
 Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
@@ -167,6 +172,16 @@ nnoremap <silent> <leader>m :<C-u>call <SID>launch_ddu_mr()<CR>
 nnoremap <silent> <leader>r :<C-u>call <SID>launch_ddu_register()<CR>
 nnoremap <silent> <leader>g :<C-u>call <SID>launch_ddu_rg_live()<CR>
 
+" DDC SETTINGS
+call ddc#custom#patch_global('ui', 'native')
+call ddc#custom#patch_global('sources', ['vim-lsp'])
+call ddc#custom#patch_global('sourceOptions', #{
+      \ vim-lsp: #{
+      \  matchers: ['matcher_head'],
+      \  mark: 'lsp',
+      \ }
+      \})
+call ddc#enable()
 
 " LSP SETTINGS
 function! s:on_lsp_buffer_enabled() abort
