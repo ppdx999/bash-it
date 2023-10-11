@@ -71,6 +71,7 @@ Plug 'Shougo/ddc.vim'
 Plug 'Shougo/ddc-ui-native'
 Plug 'Shougo/ddc-filter-matcher_head'
 Plug 'shun/ddc-source-vim-lsp'
+
 " GIT
 Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
@@ -214,4 +215,8 @@ augroup END
 
 " FERN SETTINGS
 nnoremap <silent> <leader>j :<C-u>Fern . -reveal=%<CR>
-let g:fern#default_hidden = 1
+autocmd FileType fern call s:init_fern()
+function! s:init_fern() abort
+  let g:fern#default_hidden = 1
+  nmap <buffer><silent> D <Plug>(fern-action-remove)<CR>
+endfunction
