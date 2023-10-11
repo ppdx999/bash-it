@@ -102,7 +102,6 @@ call ddu#custom#patch_global({
     \   }
     \ })
 
-autocmd FileType ddu-ff call s:ddu_ff_keybinds()
 function! s:ddu_ff_keybinds() abort
   nnoremap <buffer><silent> <CR>
         \ <Cmd>call ddu#ui#ff#do_action('itemAction')<CR>
@@ -112,11 +111,16 @@ function! s:ddu_ff_keybinds() abort
         \ <Cmd>call ddu#ui#ff#do_action('quit')<CR>
 endfunction
 
-autocmd FileType ddu-ff-filter call s:ddu_ff_filter_keybinds()
 function! s:ddu_ff_filter_keybinds() abort
   inoremap <buffer><silent> <CR>
       \ <Esc><Cmd>call ddu#ui#ff#do_action('closeFilterWindow')<CR>
 endfunction
+
+augroup ddu_ff_keymaps
+  autocmd!
+  autocmd FileType ddu-ff call s:ddu_ff_keybinds()
+  autocmd FileType ddu-ff-filter call s:ddu_ff_filter_keybinds()
+augroup END
 
 function! s:launch_ddu_file() abort
   " If current dir has .git, use Ddu file_external,
@@ -165,7 +169,6 @@ function! s:launch_ddu_rg_live() abort
         \   },
         \ })
 endfunction
-
 
 nnoremap <silent> <leader>f :<C-u>call <SID>launch_ddu_file()<CR>
 nnoremap <silent> <leader>b :<C-u>call <SID>launch_ddu_buffer()<CR>
@@ -217,8 +220,11 @@ augroup END
 
 " FERN SETTINGS
 nnoremap <silent> <leader>j :<C-u>Fern . -reveal=%<CR>
-autocmd FileType fern call s:init_fern()
 function! s:init_fern() abort
   let g:fern#default_hidden = 1
   nmap <buffer><silent> D <Plug>(fern-action-remove)<CR>
 endfunction
+augroup fern_init
+  autocmd!
+  autocmd FileType fern call s:init_fern()
+augroup END
