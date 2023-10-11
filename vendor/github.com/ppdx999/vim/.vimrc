@@ -66,9 +66,12 @@ Plug 'kuuote/ddu-source-mr'
 Plug 'Shougo/ddu-source-register'
 Plug 'shun/ddu-source-rg'
 
+" GIT
+Plug 'tpope/vim-fugitive'
+Plug 'airblade/vim-gitgutter'
+
 " MISC
 Plug 'github/copilot.vim'
-Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-surround'
 Plug 'jabirali/vim-tmux-yank'
