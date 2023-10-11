@@ -36,8 +36,8 @@ nnoremap <leader>w :w<CR>
 nnoremap <leader>q :q<CR>
 nnoremap <leader>v :<C-u>vs<CR>
 nnoremap <leader>j :<C-u>Explore<CR>
-nnoremap <C-j> ]b
-nnoremap <C-k> [b
+nnoremap <C-j> :bnext<CR>
+nnoremap <C-k> :bprevious<CR>
 nnoremap [b :bprevious<CR>
 nnoremap ]b :bnext<CR>
 nnoremap [c :cprevious<CR>
