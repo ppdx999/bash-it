@@ -227,3 +227,24 @@ augroup fern_init
   autocmd!
   autocmd FileType fern call s:init_fern()
 augroup END
+
+" Color Setting
+function! s:color_setting() abort
+  highlight QuickFixLine ctermbg=22
+endfunction
+
+augroup color_setting
+  autocmd!
+  autocmd ColorScheme * call s:color_setting()
+augroup END
+colorscheme default
+
+" QuickFix
+function! s:quickfix_setting() abort
+  nnoremap <buffer> p <CR>zz<C-w>p
+endfunction
+
+augroup quickfix_setting
+  autocmd!
+  autocmd FileType qf call s:quickfix_setting()
+augroup END
