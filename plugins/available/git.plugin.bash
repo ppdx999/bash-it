@@ -324,3 +324,17 @@ function git_fetch_pr() {
 
 	command git fetch origin "pull/$1/head:PR-$1"
 }
+
+function git_weekly_report() {
+  about 'Shows a weekly report of commits'
+  group 'git'
+
+  git log --since='1 week ago' --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
+}
+
+function gh_weekly_report() {
+  about 'Shows a weekly report of closed issues'
+  group 'git'
+
+  gh issue list --search "is:closed sort:created-asc closed:>$(date +'%Y-%m-%d' --date '14 day ago')" --json "url,title,number" | jq -r '.[] | .result = "#" + (.number|tostring) + " " +  .title + " " + .url + " "| .result'
+}
