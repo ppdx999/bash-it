@@ -90,6 +90,9 @@ Plug 'mattn/vim-lsp-settings'
 " Filer
 Plug 'lambdalisue/fern.vim'
 
+" Colorschema
+Plug 'sainnhe/everforest'
+
 call plug#end()
 
 " DDU SETTINGS
@@ -249,3 +252,25 @@ augroup quickfix_setting
   autocmd!
   autocmd FileType qf call s:quickfix_setting()
 augroup END
+
+"-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+" Everforest Settings
+"-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
+" Important!!
+if has('termguicolors')
+  set termguicolors
+endif
+
+" For dark version.
+set background=dark
+
+" Set contrast.
+" This configuration option should be placed before `colorscheme everforest`.
+" Available values: 'hard', 'medium'(default), 'soft'
+let g:everforest_background = 'hard'
+
+" For better performance
+let g:everforest_better_performance = 1
+
+colorscheme everforest
