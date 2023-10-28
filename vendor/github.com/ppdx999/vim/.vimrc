@@ -82,6 +82,7 @@ Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-surround'
 Plug 'jabirali/vim-tmux-yank'
 Plug 'gyim/vim-boxdraw'
+Plug 'godlygeek/tabular'
 
 " LSP
 Plug 'prabirshrestha/vim-lsp'
