@@ -94,6 +94,9 @@ Plug 'lambdalisue/fern.vim'
 " Colorschema
 Plug 'sainnhe/everforest'
 
+" Elixir
+Plug 'elixir-editors/vim-elixir'
+
 call plug#end()
 
 " DDU SETTINGS
