@@ -64,6 +64,40 @@ EOF
   oj d "${url}"
 }
 
+function oj_p_c {
+  about "prepare a problem"
+  group "oj"
+
+  cat <<EOF > Makefile
+COMP = gcc
+SRC = main.c
+BIN = main
+
+all: test
+
+$(BIN): $(SRC)
+	$(COMP) -o $(BIN) $(SRC)
+
+.PHONY: run
+run: $(BIN)
+	./$(BIN)
+
+.PHONY: test
+test: $(BIN)
+	oj t -c "./$(BIN)" -d test -N
+
+.PHONY: clean
+clean:
+	rm -f $(BIN)
+EOF
+
+  contest=$(basename $(dirname $(pwd)))
+  task=$(basename $(pwd))
+
+  url="https://atcoder.jp/contests/${contest}/tasks/${task}"
+
+  oj d "${url}"
+}
 
 function oj_t_zig {
   about "test a problem"
