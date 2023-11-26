@@ -75,20 +75,28 @@ BIN = main
 
 all: test
 
-$(BIN): $(SRC)
-	$(COMP) -o $(BIN) $(SRC)
+\$(BIN): \$(SRC)
+	\$(COMP) -o \$(BIN) \$(SRC)
 
 .PHONY: run
-run: $(BIN)
-	./$(BIN)
+run: \$(BIN)
+	./\$(BIN)
 
 .PHONY: test
-test: $(BIN)
-	oj t -c "./$(BIN)" -d test -N
+test: \$(BIN)
+	oj t -c "./\$(BIN)" -d test -N
 
 .PHONY: clean
 clean:
-	rm -f $(BIN)
+	rm -f \$(BIN)
+EOF
+
+  cat <<EOF > main.c
+#include <stdio.h>
+#include <stdlib.h>
+
+int main(int argc, char *argv[]) {
+};
 EOF
 
   contest=$(basename $(dirname $(pwd)))
