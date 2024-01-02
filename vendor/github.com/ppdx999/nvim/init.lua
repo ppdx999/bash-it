@@ -203,15 +203,19 @@ require("lazy").setup({
     dependencies = {
       { "williamboman/mason.nvim" },
       { "neovim/nvim-lspconfig" },
-      { "echasnovski/mini.completion", version = false },
+      { "hrsh7th/nvim-cmp" },
+      { "hrsh7th/cmp-nvim-lsp" },
+      { "hrsh7th/vim-vsnip" },
     },
     config = function()
       local lspconfig = require("lspconfig")
-      require('mini.completion').setup({})
       require('mason').setup({})
+
       require("mason-lspconfig").setup_handlers({
         function(server_name)
-          lspconfig[server_name].setup {}
+          lspconfig[server_name].setup {
+            capabilities = require('cmp_nvim_lsp').default_capabilities(),
+          }
         end,
       })
 
@@ -233,8 +237,33 @@ require("lazy").setup({
       })
 
       vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
-      vim.lsp.diagnostic.on_publish_diagnostics, { virtual_text = false }
+        vim.lsp.diagnostic.on_publish_diagnostics, { virtual_text = false }
       )
+
+      local cmp = require('cmp')
+      cmp.setup({
+        snippet = {
+          expand = function(args)
+            vim.fn["vsnip#anonymous"](args.body)
+          end,
+        },
+        mapping = {
+          ['<C-p>'] = cmp.mapping.select_prev_item(),
+          ['<C-n>'] = cmp.mapping.select_next_item(),
+          ['<C-d>'] = cmp.mapping.scroll_docs(-4),
+          ['<C-f>'] = cmp.mapping.scroll_docs(4),
+          ['<C-Space>'] = cmp.mapping.complete(),
+          ['<C-e>'] = cmp.mapping.close(),
+          ['<CR>'] = cmp.mapping.confirm({
+            behavior = cmp.ConfirmBehavior.Replace,
+            select = true,
+          }),
+        },
+        sources = {
+          { name = 'nvim_lsp' },
+          { name = 'vsnip' },
+        },
+      })
     end
   },
   -- /------------------------------
