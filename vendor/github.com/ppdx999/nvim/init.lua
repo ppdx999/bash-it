@@ -2,10 +2,13 @@
 -- | Editor
 -- -------------------------------/
 vim.opt.number = true
+vim.opt.tabstop = 2
+vim.opt.shiftwidth = 2
 vim.opt.ignorecase = true
 vim.opt.smartcase = true
 vim.opt.hlsearch = true
 
+vim.opt.clipboard = 'unnamed'
 
 -- /------------------------------
 -- | Keymaps
@@ -94,16 +97,16 @@ require("lazy").setup({
       vim.api.nvim_create_autocmd("FileType", {
         pattern = 'ddu-ff',
         callback = function()
-          vim.keymap.set('n', '<CR>', '<Cmd>call ddu#ui#ff#do_action("itemAction")<CR>')
-          vim.keymap.set('n', 'i', '<Cmd>call ddu#ui#ff#do_action("openFilterWindow")<CR>')
-          vim.keymap.set('n', 'q', '<Cmd>call ddu#ui#ff#do_action("quit")<CR>')
+          vim.keymap.set('n', '<CR>', '<Cmd>call ddu#ui#ff#do_action("itemAction")<CR>', { buffer = true })
+          vim.keymap.set('n', 'i', '<Cmd>call ddu#ui#ff#do_action("openFilterWindow")<CR>', { buffer = true })
+          vim.keymap.set('n', 'q', '<Cmd>call ddu#ui#ff#do_action("quit")<CR>', { buffer = true })
         end
       })
 
       vim.api.nvim_create_autocmd("FileType", {
         pattern = 'ddu-ff-filter',
         callback = function()
-          vim.keymap.set('n', '<CR>', '<Cmd>call ddu#ui#ff#do_action("closeFilterWindow")<CR>')
+          vim.keymap.set('i', '<CR>', '<Cmd>call ddu#ui#ff#do_action("closeFilterWindow")<CR>', { buffer = true })
         end
       })
 
@@ -247,7 +250,7 @@ require("lazy").setup({
             vim.fn["vsnip#anonymous"](args.body)
           end,
         },
-        mapping = {
+        mapping = cmp.mapping.preset.insert({
           ['<C-p>'] = cmp.mapping.select_prev_item(),
           ['<C-n>'] = cmp.mapping.select_next_item(),
           ['<C-d>'] = cmp.mapping.scroll_docs(-4),
@@ -258,7 +261,7 @@ require("lazy").setup({
             behavior = cmp.ConfirmBehavior.Replace,
             select = true,
           }),
-        },
+        }),
         sources = {
           { name = 'nvim_lsp' },
           { name = 'vsnip' },
@@ -274,7 +277,7 @@ require("lazy").setup({
     config = function()
       local init_fern = function()
         vim.g['fern#default_hidden'] = 1
-        vim.keymap.set('n', 'D', '<Plug>(fern-action-remove)', {noremap = false})
+        vim.keymap.set('n', 'D', '<Plug>(fern-action-remove)', {noremap = false, buffer = true})
       end
 
       vim.api.nvim_create_autocmd("FileType", {
