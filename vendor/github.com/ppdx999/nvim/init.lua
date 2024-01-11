@@ -311,5 +311,14 @@ require("lazy").setup({
 
        vim.cmd('colorscheme everforest')
      end
-  }
+  },
+  -- /------------------------------
+  -- | git
+  -- ------------------------------/
+  {
+    'tpope/vim-fugitive',
+  },
+  {
+    'airblade/vim-gitgutter',
+  },
 })
