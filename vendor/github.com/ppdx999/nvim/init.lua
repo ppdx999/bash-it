@@ -10,6 +10,11 @@ vim.opt.hlsearch = true
 
 vim.opt.clipboard = 'unnamed'
 
+-- Some plugins display signcolumn only when needed
+-- that shakes the screen when the signcolumn appears
+-- so I always display signcolumn to avoid the shaking
+vim.opt.signcolumn = 'yes'
+
 -- /------------------------------
 -- | Keymaps
 -- -------------------------------/
