@@ -321,4 +321,10 @@ require("lazy").setup({
   {
     'airblade/vim-gitgutter',
   },
+  -- /------------------------------
+  -- | MISC
+  -- -------------------------------/
+  {
+    'tpope/vim-surround',
+  }
 })
