@@ -34,6 +34,7 @@ vim.keymap.set('n', ']c', ':cnext<CR>')
 vim.keymap.set('n', 'tt', ':tabnew<CR>')
 vim.keymap.set('n', '[t', ':tabprevious<CR>')
 vim.keymap.set('n', ']t', ':tabnext<CR>')
+vim.keymap.set('t', '<Esc>', '<C-\\><C-n>')
 
 -- /------------------------------
 -- | Plugins
