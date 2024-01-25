@@ -304,7 +304,12 @@ require("lazy").setup({
          vim.opt.termguicolors = true
        end
 
-       vim.opt.background = 'dark'
+       local current_hour = tonumber(os.date('%H'))
+       if current_hour >= 6 and current_hour <= 17 then
+         vim.opt.background = 'light'
+       else
+         vim.opt.background = 'dark'
+       end
 
        vim.g.everforest_background = 'hard'
 
