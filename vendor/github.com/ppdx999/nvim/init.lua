@@ -332,5 +332,8 @@ require("lazy").setup({
   -- -------------------------------/
   {
     'tpope/vim-surround',
-  }
+  },
+  {
+    'mattn/vim-maketable',
+  },
 })
