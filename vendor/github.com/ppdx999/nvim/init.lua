@@ -59,7 +59,14 @@ require("lazy").setup({
   -- | MISC
   -- -------------------------------/
   {
-    'github/copilot.vim'
+    'github/copilot.vim',
+    config = function()
+      -- enable yml because it's not enabled by default
+      vim.g.copilot_filetypes = {
+        yaml = true,
+        markdown = true,
+      }
+    end
   },
   {
    'tpope/vim-commentary'
