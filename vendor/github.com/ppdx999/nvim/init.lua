@@ -119,7 +119,7 @@ require("lazy").setup({
       vim.api.nvim_create_autocmd("FileType", {
         pattern = 'ddu-ff-filter',
         callback = function()
-          vim.keymap.set('i', '<CR>', '<Cmd>call ddu#ui#ff#do_action("closeFilterWindow")<CR>', { buffer = true })
+          vim.keymap.set('i', '<CR>', '<Esc><Cmd>call ddu#ui#ff#do_action("closeFilterWindow")<CR>', { buffer = true })
         end
       })
 
