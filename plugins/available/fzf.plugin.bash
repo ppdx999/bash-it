@@ -13,6 +13,10 @@ fi
 # No need to continue if the command is not present
 _command_exists fzf || return
 
+if [ -z ${FZF_DEFAULT_COMMAND+x}  ] && _command_exists rg ; then
+  export FZF_DEFAULT_COMMAND='rg --files --hidden --follow --glob "!\.git/*"'
+fi
+
 if [ -z ${FZF_DEFAULT_COMMAND+x}  ] && _command_exists fd ; then
   export FZF_DEFAULT_COMMAND='fd --type f'
 fi
