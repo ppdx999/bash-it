@@ -305,7 +305,7 @@ require("lazy").setup({
        end
 
        local current_hour = tonumber(os.date('%H'))
-       if current_hour >= 6 and current_hour <= 17 then
+       if current_hour >= 6 and current_hour <= 13 then
          vim.opt.background = 'light'
        else
          vim.opt.background = 'dark'
