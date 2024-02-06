@@ -325,6 +325,19 @@ require("lazy").setup({
        vim.cmd('colorscheme everforest')
      end
   },
+  --- /------------------------------
+  --  | Treesitter
+  --  -------------------------------/
+  {
+    'nvim-treesitter/nvim-treesitter',
+    config = function()
+      require('nvim-treesitter.configs').setup({
+        highlight = {
+          enable = true,
+        },
+      })
+    end
+  },
   -- /------------------------------
   -- | git
   -- ------------------------------/
